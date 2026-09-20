@@ -374,6 +374,8 @@ describe("parseMessageEvents", () => {
         messageId: "mid_abc",
         messageText: "send me the LINK please",
         senderId: "user_999",
+        isStoryMention: false,
+        isStoryReply: false,
       },
     ]);
   });

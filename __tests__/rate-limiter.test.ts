@@ -14,18 +14,14 @@ const { mockGet, mockEval, mockDel, mockDecr } = vi.hoisted(() => ({
   mockDecr: vi.fn(),
 }));
 
-vi.mock("ioredis", () => {
-  const MockRedis = vi.fn().mockImplementation(function (
-    this: Record<string, unknown>
-  ) {
-    this.get = mockGet;
-    this.eval = mockEval;
-    this.del = mockDel;
-    this.decr = mockDecr;
-    return this;
-  });
-  return { default: MockRedis };
-});
+vi.mock("@/lib/queue/client", () => ({
+  getRedisConnection: () => ({
+    get: mockGet,
+    eval: mockEval,
+    del: mockDel,
+    decr: mockDecr,
+  }),
+}));
 
 vi.stubEnv("REDIS_URL", "redis://localhost:6379");
 
