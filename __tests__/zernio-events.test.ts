@@ -33,7 +33,7 @@ describe('Zernio event boundary', () => {
   });
   it('maps inbound story text and read receipts to their existing handlers', () => {
     const result = normalizeZernioEvent({ account, payload: { ...envelope, event: 'message.received', message: { platformMessageId: 'mid', direction: 'incoming', text: 'LINK', sender: { id: 'person1' } } } });
-    expect(parseMessageEvents(result!)[0]).toEqual({ instagramAccountId: 'ig1', messageId: 'mid', messageText: 'LINK', senderId: 'person1' });
+    expect(parseMessageEvents(result!)[0]).toEqual({ instagramAccountId: 'ig1', messageId: 'mid', messageText: 'LINK', senderId: 'person1', isStoryMention: false, isStoryReply: false });
     const read = normalizeZernioEvent({ account, payload: { ...envelope, event: 'message.read', conversation: { participantId: 'person1' }, statusAt: '2026-09-08T00:00:00Z' } });
     expect(parseReadEvents(read!)[0]).toEqual({ instagramAccountId: 'ig1', userId: 'person1', watermark: 1788825600000 });
   });
